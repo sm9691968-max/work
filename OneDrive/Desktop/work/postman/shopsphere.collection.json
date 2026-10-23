@@ -1,0 +1,117 @@
+{
+  "info": {
+    "name": "Shopsphere API",
+    "description": "ShopSphere REST API. Responses follow docs/api-standards.md.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Get Health",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Body is JSON', function () {",
+                  "  pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "",
+                  "pm.test('Status is ok', function () {",
+                  "  pm.expect(body.status).to.eql('ok');",
+                  "});",
+                  "",
+                  "pm.test('Uptime is a number', function () {",
+                  "  pm.expect(body.uptime).to.be.a('number');",
+                  "  pm.expect(body.uptime).to.be.at.least(0);",
+                  "});",
+                  "",
+                  "pm.test('DB state is reported', function () {",
+                  "  pm.expect(body).to.have.property('dbState');",
+                  "  pm.expect(body.dbState).to.be.oneOf(['connected', 'connecting', 'disconnected', 'disconnecting', 'unknown', 'uninitialized']);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiUrl}}/health",
+              "host": ["{{apiUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Returns service status, uptime and database state."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ping",
+      "item": [
+        {
+          "name": "Get Ping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Body is JSON', function () {",
+                  "  pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "",
+                  "pm.test('Response uses the success envelope', function () {",
+                  "  pm.expect(body.success).to.eql(true);",
+                  "  pm.expect(body).to.have.property('message');",
+                  "  pm.expect(body).to.have.property('data');",
+                  "});",
+                  "",
+                  "pm.test('Ping data is correct', function () {",
+                  "  pm.expect(body.data.message).to.eql('pong');",
+                  "  pm.expect(body.data.service).to.eql('shopsphere-api');",
+                  "  pm.expect(body.data.timestamp).to.be.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{apiUrl}}/ping",
+              "host": ["{{apiUrl}}"],
+              "path": ["ping"]
+            },
+            "description": "Liveness probe through all backend layers."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    }
+  ]
+}
