@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "ShopSphere backend API",
   "main": "src/server.js",
+  "imports": {
+    "#config/*": "./src/config/*.js",
+    "#controllers/*": "./src/controllers/*.js",
+    "#middleware/*": "./src/middleware/*.js",
+    "#models/*": "./src/models/*.js",
+    "#routes/*": "./src/routes/*.js",
+    "#services/*": "./src/services/*.js",
+    "#utils/*": "./src/utils/*.js"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
