@@ -1,0 +1,24 @@
+graph TD
+    subgraph Client
+        Web["React + TypeScript + Tailwind (Vite)"]
+    end
+
+    subgraph Auth["Auth Provider"]
+        JWT["JWT (access + refresh tokens)"]
+    end
+
+    subgraph API["Node + Express API"]
+        Routes["Routes"]
+        Middleware["Middleware (auth, validation, errors)"]
+        Modules["Domain Modules"]
+        Routes --> Middleware --> Modules
+    end
+
+    subgraph DB["MongoDB Atlas (M0 free tier)"]
+        Collections["Collections (users, products, carts, orders, payments)"]
+    end
+
+    Web -->|HTTPS / JSON| Routes
+    Web -->|login / refresh| JWT
+    JWT -->|verified on request| Middleware
+    Modules -->|mongoose| Collections
