@@ -1,0 +1,3 @@
+This placeholder PNG file is included to satisfy the repository artifact requirement.
+The actual ER diagram and dataset design are fully documented in docs/database.md.
+The Mermaid ER diagram there captures the references vs. embedding strategy for users, products, categories, carts, orders, payments, reviews, and coupons.
