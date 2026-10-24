@@ -1,0 +1,72 @@
+erDiagram
+    USER ||--o| CART : owns
+    USER ||--o{ ORDER : places
+    USER ||--o{ REVIEW : writes
+    USER ||--o{ PAYMENT : pays
+
+    CATEGORY ||--o{ PRODUCT : contains
+    PRODUCT ||--o{ REVIEW : receives
+    PRODUCT ||--o{ CART_ITEM : referenced_by
+    PRODUCT ||--o{ ORDER_ITEM : snapshot_of
+
+    CART ||--o{ CART_ITEM : embeds
+    ORDER ||--o{ ORDER_ITEM : embeds
+    ORDER ||--o| PAYMENT : settles
+    COUPON o|--o{ ORDER : optionally_applies_to
+
+    USER {
+      ObjectId _id
+      string email
+    }
+    CATEGORY {
+      ObjectId _id
+      string name
+      string slug
+    }
+    PRODUCT {
+      ObjectId _id
+      ObjectId categoryId
+      string name
+      string sku
+      number price
+    }
+    CART {
+      ObjectId _id
+      ObjectId userId
+      array items_embedded
+    }
+    CART_ITEM {
+      ObjectId productId
+      string name_snapshot
+      number price_snapshot
+      number qty
+    }
+    ORDER {
+      ObjectId _id
+      ObjectId userId
+      ObjectId couponId
+      array items_embedded
+    }
+    ORDER_ITEM {
+      ObjectId productId
+      string name_snapshot
+      number price_snapshot
+      number qty
+    }
+    PAYMENT {
+      ObjectId _id
+      ObjectId orderId
+      string status
+      number amount
+    }
+    REVIEW {
+      ObjectId _id
+      ObjectId userId
+      ObjectId productId
+      number rating
+    }
+    COUPON {
+      ObjectId _id
+      string code
+      string type
+    }

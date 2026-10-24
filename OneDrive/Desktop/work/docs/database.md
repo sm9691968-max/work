@@ -6,7 +6,7 @@ This document defines the MongoDB-backed data model for ShopSphere. The design f
 
 ```mermaid
 erDiagram
-    USER ||--o{ CART : owns
+    USER ||--o| CART : owns
     USER ||--o{ ORDER : places
     USER ||--o{ REVIEW : writes
     USER ||--o{ PAYMENT : pays
@@ -19,7 +19,7 @@ erDiagram
     CART ||--o{ CART_ITEM : contains
     ORDER ||--o{ ORDER_ITEM : contains
     ORDER ||--o| PAYMENT : settles
-    ORDER }o--|| COUPON : applies
+    COUPON o|--o{ ORDER : optionally_applies_to
 
     USER {
       ObjectId _id
@@ -138,6 +138,8 @@ erDiagram
       Date createdAt
     }
 ```
+
+![ShopSphere ER diagram](er-diagram.png)
 
 ### Reference vs. embedding decisions
 
